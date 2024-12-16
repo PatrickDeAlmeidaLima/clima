@@ -131,6 +131,8 @@ Antes de rodar os projetos, é necessário ter os seguintes itens instalados:
     - Vento: 3.72 km/h
     - Umidade: 59%
     - Chuva: 0.8 mm
+    ![Resultado esperado](https://github.com/PatrickDeAlmeidaLima/clima/blob/main/Resultado-esperado.png)
+
 
 #### Contribuição
 
