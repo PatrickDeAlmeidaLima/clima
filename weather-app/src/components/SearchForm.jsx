@@ -73,7 +73,8 @@ const SearchForm = ({ onSearch, onLocationUpdate }) => {
     };
 
     const handleCitySuggestionClick = (suggestion) => {
-        const locationInfo = `${suggestion.name} - ${suggestion.adminName1} - ${suggestion.countryName}`;
+        // const locationInfo = `${suggestion.name} - ${suggestion.adminName1} - ${suggestion.countryName}`;
+        const locationInfo = `${suggestion.name} - ${suggestion.adminName1}`;
         setCity(suggestion.name);
         handleCitySearch(suggestion.name, locationInfo);
     };
@@ -85,7 +86,8 @@ const SearchForm = ({ onSearch, onLocationUpdate }) => {
                 (suggestion) => suggestion.name.toLowerCase() === city.toLowerCase()
             );
             if (suggestion) {
-                const locationInfo = `${suggestion.name} - ${suggestion.adminName1} - ${suggestion.countryName}`;
+                // const locationInfo = `${suggestion.name} - ${suggestion.adminName1} - ${suggestion.countryName}`;
+                const locationInfo = `${suggestion.name} - ${suggestion.adminName1}`;
                 await handleCitySearch(city, locationInfo);
             } else {
                 setError('Cidade não encontrada');
@@ -120,6 +122,7 @@ const SearchForm = ({ onSearch, onLocationUpdate }) => {
             {showSuggestions && (
                 <div className="suggestions-list">
                     {citySuggestions.map((suggestion) => (
+                         
                         <div
                             key={suggestion.geonameId}
                             className="suggestion-item"
