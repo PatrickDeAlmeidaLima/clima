@@ -3,20 +3,19 @@ import './App.css'; // Adicione os estilos CSS para o app
 import SearchForm from './components/SearchForm';
 import WeatherDetails from './components/WeatherDetails';
 
-const App = () => {
-    const [weather, setWeather] = useState(null); // Estado para armazenar os dados do clima
-
-    // Função que será chamada pelo SearchForm para buscar os dados do clima
-    const handleSearch = async (weatherData) => {
-        setWeather(weatherData); // Atualiza o estado com os dados do clima
-    };
+function App() {
+    const [weatherData, setWeatherData] = useState(null);
+    const [location, setLocation] = useState('');
 
     return (
         <div className="app">
-            <SearchForm onSearch={handleSearch} />
-            {weather && <WeatherDetails weather={weather} />}
+            <SearchForm
+                onSearch={(data) => setWeatherData(data)}
+                onLocationUpdate={(locationInfo) => setLocation(locationInfo)}
+            />
+            <WeatherDetails weather={weatherData} location={location} />
         </div>
     );
-};
+}
 
 export default App;

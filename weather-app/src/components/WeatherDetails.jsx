@@ -1,24 +1,23 @@
 import React from 'react';
 import './WeatherDetails.css';
+import weatherClouds from '../assets/weather.png';
+import windIcon from '../assets/image-1.png';
+import rainIcon from '../assets/image-2.png';
+import cloudRainIcon from '../assets/image-3.png';
+import locationIcon from '../assets/image-4.png';
 
-import weatherClouds from '../assets/weather.png'; 
-import windIcon from '../assets/image-1.png'; 
-import rainIcon from '../assets/image-2.png'; 
-import cloudRainIcon from '../assets/image-3.png'; 
-import locationIcon from '../assets/image-4.png'; 
-
-function WeatherDetails({ weather }) {
-    const today = weather?.forecast?.[0]; 
+function WeatherDetails({ weather, location }) {
+    const today = weather?.forecast?.[0];
 
     const getWeatherIcon = (conditionCode) => {
         if ([12, 28].includes(conditionCode)) {
-            return weatherClouds; 
+            return weatherClouds;
         } else if ([6, 15, 27].includes(conditionCode)) {
-            return rainIcon; 
+            return rainIcon;
         } else if ([18, 22].includes(conditionCode)) {
-            return cloudRainIcon; 
+            return cloudRainIcon;
         } else {
-            return windIcon; 
+            return windIcon;
         }
     };
 
@@ -30,7 +29,7 @@ function WeatherDetails({ weather }) {
                 </div>
                 <div>
                     <img src={locationIcon} alt="Localização" className="icon" />
-                    {weather?.location || 'Localização não disponível'} 
+                    {location || 'Localização não disponível'}
                 </div>
             </div>
 

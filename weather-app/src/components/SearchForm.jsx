@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import './SearchForm.css';
-
 import { getCoordinates, getWeather } from '../services/api';
 
-const SearchForm = ({ onSearch }) => {
-    const [city, setCity] = useState(''); // Cidade buscada pelo usuário
-    const [weatherData, setWeatherData] = useState(null); // Dados do clima
-    const [loading, setLoading] = useState(false); // Indicador de carregamento
-    const [error, setError] = useState(null); // Erros durante a busca
-    const [citySuggestions, setCitySuggestions] = useState([]); // Sugestões de cidades
-    const [showSuggestions, setShowSuggestions] = useState(false); // Controla a exibição da lista de sugestões
+const SearchForm = ({ onSearch, onLocationUpdate }) => {
+    const [city, setCity] = useState('');
+    const [weatherData, setWeatherData] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [citySuggestions, setCitySuggestions] = useState([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
 
-    // Carregar os dados de Brasília apenas uma vez
     useEffect(() => {
         const loadDefaultWeather = async () => {
             try {
                 setLoading(true);
-                const coordinatesData = await getCoordinates('Brasília'); // Coordenadas de Brasília
+                const coordinatesData = await getCoordinates('Brasília');
                 const { latitude, longitude } = coordinatesData;
 
-                const weatherData = await getWeather(latitude, longitude); // Dados do clima
-                setWeatherData(weatherData); // Atualiza o estado com dados de Brasília
-                onSearch(weatherData); // Passa os dados para o componente pai
+                const weatherData = await getWeather(latitude, longitude);
+                setWeatherData(weatherData);
+                onSearch(weatherData);
+                onLocationUpdate('Brasília - Distrito Federal - Brasil'); // Localização padrão
             } catch (error) {
                 setError('Erro ao carregar dados de Brasília');
             } finally {
@@ -30,15 +29,14 @@ const SearchForm = ({ onSearch }) => {
         };
 
         if (!weatherData) {
-            loadDefaultWeather(); // Carrega o clima de Brasília se não houver dados
+            loadDefaultWeather();
         }
-    }, [weatherData, onSearch]);
+    }, [weatherData, onSearch, onLocationUpdate]);
 
-    // Função para buscar sugestões de cidades enquanto o usuário digita
     const fetchCitySuggestions = async (query) => {
         if (query.trim() === '') return;
         setError(null);
-        setShowSuggestions(true); // Exibe a lista de sugestões
+        setShowSuggestions(true);
 
         try {
             const response = await fetch(
@@ -54,33 +52,19 @@ const SearchForm = ({ onSearch }) => {
         }
     };
 
-    // Função para lidar com o submit do formulário
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (city.trim()) {
-            await handleCitySearch(city);
-        }
-    };
-
-    // Função para buscar o clima com a cidade selecionada
-    const handleCitySearch = async (cityName) => {
+    const handleCitySearch = async (cityName, locationInfo) => {
         setLoading(true);
         setError(null);
-        setShowSuggestions(false); // Fecha a lista de sugestões após a busca
+        setShowSuggestions(false);
 
         try {
             const coordinatesData = await getCoordinates(cityName);
-
-            if (coordinatesData.error) {
-                setError('Cidade não encontrada');
-                return;
-            }
-
             const { latitude, longitude } = coordinatesData;
-            const weatherData = await getWeather(latitude, longitude);
 
-            setWeatherData(weatherData); // Atualiza o estado com dados do clima
-            onSearch(weatherData); // Passa os dados para o componente pai
+            const weatherData = await getWeather(latitude, longitude);
+            setWeatherData(weatherData);
+            onSearch(weatherData);
+            onLocationUpdate(locationInfo); // Atualiza a localização
         } catch (error) {
             setError('Erro ao buscar os dados');
         } finally {
@@ -88,11 +72,25 @@ const SearchForm = ({ onSearch }) => {
         }
     };
 
-    // Função para lidar com o clique em uma sugestão de cidade
     const handleCitySuggestionClick = (suggestion) => {
-        setCity(suggestion.name); // Preenche o campo de pesquisa com o nome da cidade
-        handleCitySearch(suggestion.name); // Faz a busca automaticamente
-        setShowSuggestions(false); // Fecha a lista de sugestões
+        const locationInfo = `${suggestion.name} - ${suggestion.adminName1} - ${suggestion.countryName}`;
+        setCity(suggestion.name);
+        handleCitySearch(suggestion.name, locationInfo);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (city.trim()) {
+            const suggestion = citySuggestions.find(
+                (suggestion) => suggestion.name.toLowerCase() === city.toLowerCase()
+            );
+            if (suggestion) {
+                const locationInfo = `${suggestion.name} - ${suggestion.adminName1} - ${suggestion.countryName}`;
+                await handleCitySearch(city, locationInfo);
+            } else {
+                setError('Cidade não encontrada');
+            }
+        }
     };
 
     return (
@@ -104,12 +102,12 @@ const SearchForm = ({ onSearch }) => {
                     value={city}
                     onChange={(e) => {
                         setCity(e.target.value);
-                        fetchCitySuggestions(e.target.value); // Atualiza as sugestões enquanto digita
+                        fetchCitySuggestions(e.target.value);
                     }}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
-                            handleSubmit(e); // Aciona a busca ao pressionar Enter
-                            setShowSuggestions(false); // Fecha a lista de sugestões ao pressionar Enter
+                            handleSubmit(e);
+                            setShowSuggestions(false);
                         }
                     }}
                 />
@@ -119,14 +117,13 @@ const SearchForm = ({ onSearch }) => {
             {loading && <div>Carregando...</div>}
             {error && <div>{error}</div>}
 
-            {/* Exibir as sugestões de cidades */}
             {showSuggestions && (
                 <div className="suggestions-list">
                     {citySuggestions.map((suggestion) => (
                         <div
                             key={suggestion.geonameId}
                             className="suggestion-item"
-                            onClick={() => handleCitySuggestionClick(suggestion)} // Clique na sugestão
+                            onClick={() => handleCitySuggestionClick(suggestion)}
                         >
                             {suggestion.name}, {suggestion.countryName}
                         </div>
