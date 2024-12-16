@@ -45,7 +45,7 @@ Antes de rodar os projetos, é necessário ter os seguintes itens instalados:
 
 1. Clone o repositório do back-end:
     ```bash
-    git clone https://github.com/seu-usuario/weather-app-backend.git
+    git clone https://github.com/PatrickDeAlmeidaLima/clima
     cd weather-app-backend
     ```
 
@@ -73,7 +73,7 @@ Antes de rodar os projetos, é necessário ter os seguintes itens instalados:
 
 1. Clone o repositório do front-end:
     ```bash
-    git clone https://github.com/seu-usuario/weather-app-frontend.git
+    git clone https://github.com/PatrickDeAlmeidaLima/clima/tree/main/weather-app
     cd weather-app-frontend
     ```
 
@@ -150,6 +150,6 @@ Este projeto está sob a licença **MIT**. Consulte o arquivo [LICENSE](LICENSE)
 
 #### Contato
 
-- **Autor**: Seu Nome
-- **Email**: seuemail@dominio.com
-- **LinkedIn**: [Seu LinkedIn](https://linkedin.com/in/seu-perfil)
+- **Autor**: Patrick Lima
+- **Email**: patrick.almeida.lima@gmail.com
+- **LinkedIn**: [Seu LinkedIn](https://www.linkedin.com/in/patrick-almeida-lima/)
