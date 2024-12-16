@@ -1,0 +1,161 @@
+.weather-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1rem;
+    max-width: 550px;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    backdrop-filter: blur(15px);
+    color: white;
+    height: auto;
+    position: relative;
+    background: url('../assets/background.png') no-repeat center center;
+    background-size: cover;
+}
+
+.location {
+    display: flex;
+    justify-content: space-between;
+    text-align: right;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.cloud {
+    position: absolute;
+    top: -80px;
+    left: -60px;
+    height: auto;
+}
+
+.icon {
+    margin-right: 0.5rem;
+    width: 20px;
+    height: 20px;
+}
+
+.temperature {
+    font-size: 3.2rem;
+    font-weight: bold;
+    margin: 4rem 0 16rem 0;
+}
+
+.weather-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+    margin-top: 1rem;
+    width: 100%;
+    flex-direction: row;
+}
+
+.info-box {
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    width: 48%;
+    background-color: rgba(118, 107, 207, 0.8);
+    border-radius: 8px;
+}
+
+.info-icon {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.info-box span {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 5px;
+    text-align: left;
+}
+
+.info-box:hover {
+    background-color: rgba(110, 25, 179, 0.7);
+}
+
+/* Lista de sugestões */
+.suggestions-list {
+    margin: -27px 0 0px 0px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: rgba(92, 18, 228, 0.8);
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.suggestion-item:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 600px) {
+    .weather-container {
+        max-width: 90%;
+        padding: 15px;
+        height: auto;
+        margin: 10px auto;
+    }
+
+    .temperature {
+        font-size: 2.5rem;
+        margin: 1.5rem 0 3rem 0;
+    }
+
+    .weather-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .info-box {
+        width: 90%;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        margin: 5px 0;
+    }
+
+    .info-icon {
+        margin-bottom: 10px;
+    }
+
+    .info-box span {
+        font-size: 1rem;
+        text-align: center;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    .weather-container {
+        max-width: 80%;
+        padding: 20px;
+    }
+
+    .temperature {
+        font-size: 2.8rem;
+    }
+
+    .info-box {
+        width: 48%;
+        padding: 12px;
+    }
+}
