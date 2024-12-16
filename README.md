@@ -154,4 +154,4 @@ Este projeto está sob a licença **MIT**. Consulte o arquivo [LICENSE](LICENSE)
 
 - **Autor**: Patrick Lima
 - **Email**: patrick.almeida.lima@gmail.com
-- **LinkedIn**: [Seu LinkedIn](https://www.linkedin.com/in/patrick-almeida-lima/)
+- **LinkedIn**: [LinkedIn](https://www.linkedin.com/in/patrick-almeida-lima/)
